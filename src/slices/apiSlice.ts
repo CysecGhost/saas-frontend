@@ -1,9 +1,9 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { RootState } from "../store"; 
+import { setCredentials, logout } from "./authSlice";
 
-export const apiSlice = createApi({
-    baseQuery: fetchBaseQuery({ 
+const baseQuery = fetchBaseQuery({ 
         baseUrl: "/api",
         credentials: "include",
         prepareHeaders: (headers, { getState }) => {
@@ -16,7 +16,31 @@ export const apiSlice = createApi({
 
             return headers;
         }
-    }),
+    });
+
+    const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
+        let result = await baseQuery(args, api, extraOptions);
+
+        if (result.error && result.error.status === 401) {
+            const refreshResult = await baseQuery(
+                {url: "/auth/refresh", method: "POST"},
+                api,
+                extraOptions
+            );
+            if (refreshResult.data) {
+              const token = (refreshResult.data as any).accessToken;
+              api.dispatch(setCredentials(token));
+              result = await baseQuery(args, api, extraOptions);
+            } else {
+                api.dispatch(logout());
+            };
+        };
+
+        return result;
+    };
+
+export const apiSlice = createApi({
+    baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
         getRevenue: builder.query<{ totalRevenue: number }, void>({
             query: () => ({
