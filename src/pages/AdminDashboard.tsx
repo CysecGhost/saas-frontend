@@ -1,6 +1,6 @@
 import { useGetRevenueQuery } from "../slices/apiSlice"
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const { data, isLoading, error } = useGetRevenueQuery();
 
   if (isLoading) {
@@ -13,10 +13,10 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>Admin Dashboard</h1>
       <p>Revenue: {data?.totalRevenue}</p>
     </div>
   )
 }
 
-export default Dashboard;
+export default AdminDashboard;

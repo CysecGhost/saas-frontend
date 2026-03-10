@@ -24,7 +24,7 @@ const Login = () => {
       }
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials(res.accessToken));
-      navigate("/dashboard");
+      navigate("/admin/dashboard");
       console.log("Login successful");
     } catch (err) {
       const message =

@@ -9,9 +9,14 @@ const baseQuery = fetchBaseQuery({
         prepareHeaders: (headers, { getState }) => {
             const state = getState() as RootState;
             const token = state.auth.accessToken;
+            const orgId = state.auth.orgId;
 
             if (token) {
                 headers.set("Authorization", `Bearer ${token}`);
+            };
+
+            if (orgId) {
+                headers.set("X-Org-Id", orgId);
             };
 
             return headers;

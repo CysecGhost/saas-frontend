@@ -13,7 +13,8 @@ import App from './App.tsx'
 import Home from './pages/Home.tsx';
 import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
-import Dashboard from './pages/Dashboard.tsx';
+import Organizations from './pages/Organizations.tsx';
+import AdminDashboard from './pages/AdminDashboard.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,7 +22,8 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path='/dashboard' element={<Dashboard /> } />
+      <Route path='/organizations' element={<Organizations /> } />
+      <Route path='/admin/dashboard' element={<AdminDashboard /> } />
     </Route>
   )
 );
