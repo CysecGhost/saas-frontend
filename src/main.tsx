@@ -18,6 +18,7 @@ import AdminDashboard from './pages/AdminDashboard.tsx';
 import CreateProduct from './pages/CreateProduct.tsx';
 import Products from './pages/Products.tsx';
 import CreateOrder from './pages/CreateOrder.tsx';
+import Orders from './pages/Orders.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path='/admin/products' element={<Products /> } />
       <Route path='/admin/products/create' element={<CreateProduct /> } />
       <Route path='/admin/orders/create' element={<CreateOrder /> } />
+      <Route path='/admin/orders' element={<Orders /> } />
     </Route>
   )
 );

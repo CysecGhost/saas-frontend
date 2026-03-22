@@ -50,6 +50,12 @@ const Home = () => {
             >
                 Create Order
             </Link>
+            <Link
+                to="/admin/orders"
+                className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition"
+            >
+                Orders
+            </Link>
         </div>
     </>
   )
