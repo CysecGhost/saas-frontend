@@ -15,6 +15,9 @@ import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
 import Organizations from './pages/Organizations.tsx';
 import AdminDashboard from './pages/AdminDashboard.tsx';
+import CreateProduct from './pages/CreateProduct.tsx';
+import Products from './pages/Products.tsx';
+import CreateOrder from './pages/CreateOrder.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +27,9 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path='/organizations' element={<Organizations /> } />
       <Route path='/admin/dashboard' element={<AdminDashboard /> } />
+      <Route path='/admin/products' element={<Products /> } />
+      <Route path='/admin/products/create' element={<CreateProduct /> } />
+      <Route path='/admin/orders/create' element={<CreateOrder /> } />
     </Route>
   )
 );
