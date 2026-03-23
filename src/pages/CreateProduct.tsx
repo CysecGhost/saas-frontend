@@ -19,43 +19,50 @@ const CreateProduct = () => {
   };
 
   return (
-    <form onSubmit={submitHandler} className="flex flex-col gap-4 max-w-md mx-auto mt-8">
-      <label htmlFor="name">
-        Product Name:
-      </label>
+    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-sm border mt-10">
+  <h1 className="text-2xl font-bold mb-6 text-center">Create Product</h1>
+
+  <form onSubmit={submitHandler} className="flex flex-col gap-4">
+    <div>
+      <label className="text-sm text-gray-600">Product Name</label>
       <input
-        id="name"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Product Name"
+        placeholder="Enter product name"
+        className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
       />
+    </div>
 
-      <label htmlFor="price">
-        Price:
-      </label>
+    <div>
+      <label className="text-sm text-gray-600">Price</label>
       <input
-        id="price"
         type="number"
         value={price}
         onChange={(e) => setPrice(Number(e.target.value))}
-        placeholder="Price"
+        placeholder="Enter price"
+        className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
       />
+    </div>
 
-      <label htmlFor="stock">
-        Stock:
-      </label>
+    <div>
+      <label className="text-sm text-gray-600">Stock</label>
       <input
-        id="stock"
         type="number"
         value={stock}
         onChange={(e) => setStock(Number(e.target.value))}
-        placeholder="Stock"
+        placeholder="Enter stock"
+        className="w-full mt-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-200"
       />
+    </div>
 
-      <button type="submit" className="w-1/2 self-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-        Create Product
-      </button>
-    </form>
+    <button
+      type="submit"
+      className="mt-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+    >
+      Create Product
+    </button>
+  </form>
+</div>
   );
 };
 
