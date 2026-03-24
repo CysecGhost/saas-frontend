@@ -47,14 +47,5 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ["Products", "Orders", "Analytics"],
-    endpoints: (builder) => ({
-        getRevenue: builder.query<{ totalRevenue: number }, void>({
-            query: () => ({
-                url: "/analytics/revenue",
-                providesTags: ["Analytics"],
-            })
-        })
-    }), 
+    endpoints: (builder) => ({}), 
 });
-
-export const { useGetRevenueQuery } = apiSlice;
