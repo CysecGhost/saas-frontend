@@ -2,7 +2,7 @@ import { apiSlice } from "./apiSlice";
 
 const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-      createOrder: builder.mutation({
+        createOrder: builder.mutation({
           query: (data) => ({
               url: "/orders",
               method: "POST",
@@ -10,9 +10,14 @@ const orderApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["Products", "Orders", "Analytics"],
         }),
-        getOrders: builder.query<any, void>({
-            query: () => ({
+        getOrders: builder.query<any, { page?: number; limit?: number; status?: string }>({
+            query: ({ page = 1, limit = 10, status } = {}) => ({
                 url: "/orders",
+                params: {
+                    page,
+                    limit,
+                    ...(status && { status }),
+                },
             }),
             providesTags: ["Orders"],
         }),
