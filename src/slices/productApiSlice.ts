@@ -15,8 +15,8 @@ const productApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: "/products",
         method: "GET",
-        providesTags: ["Products"],
       }),
+      providesTags: ["Products"],
     }),
   }),
 });

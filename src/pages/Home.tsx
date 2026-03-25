@@ -1,64 +1,35 @@
 import { Link } from "react-router-dom";
 
+const links = [
+  { to: "/login", label: "Login" },
+  { to: "/register", label: "Register" },
+  { to: "/admin/dashboard", label: "Dashboard" },
+  { to: "/organizations", label: "Organizations" },
+  { to: "/admin/products", label: "Products" },
+  { to: "/admin/products/create", label: "Create Product" },
+  { to: "/admin/orders/create", label: "Create Order" },
+  { to: "/admin/orders", label: "Orders" },
+];
+
 const Home = () => {
   return (
-    <>
-        <h1 className="text-4xl font-bold text-center mt-10">Admin Dashboard</h1>
-        <p className="text-center mt-4 text-gray-600">
-            Welcome to the admin dashboard. Use the navigation to access different sections.
-        </p>
-        <div className="mt-10 flex justify-center gap-4">
-            <Link
-                to="/login"
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-            >
-                Login
-            </Link>
-            <Link
-                to="/register"
-                className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition"
-            >
-                Register
-            </Link>
-            <Link
-                to="/admin/dashboard"
-                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-            >
-                Dashboard
-            </Link>
-            <Link
-                to="/organizations"
-                className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"
-            >
-                Organizations
-            </Link>
-            <Link
-                to="/admin/products"
-                className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition"
-            >
-                Products
-            </Link>
-            <Link
-                to="/admin/products/create"
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-            >
-                Create Product
-            </Link>
-            <Link
-                to="/admin/orders/create"
-                className="px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition"
-            >
-                Create Order
-            </Link>
-            <Link
-                to="/admin/orders"
-                className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition"
-            >
-                Orders
-            </Link>
-        </div>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-10">
+      <h1 className="text-5xl font-bold text-white tracking-tight mb-3">Admin Dashboard</h1>
+      <p className="text-gray-500 text-sm mb-12">Select a module to get started</p>
+
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl">
+        {links.map(({ to, label }) => (
+          <Link
+            key={to}
+            to={to}
+            className="flex items-center justify-center px-4 py-3 rounded-xl bg-gray-900 border border-gray-800 text-gray-400 text-sm font-medium hover:bg-gray-800 hover:text-white hover:border-gray-600 transition"
+          >
+            {label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default Home;
