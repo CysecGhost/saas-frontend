@@ -3,11 +3,12 @@ import { useDispatch } from "react-redux";
 import { setOrgId } from "../slices/authSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ErrorState from "../components/ErrorState";
 
 const Organizations = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, isLoading, error } = useGetOrganizationsQuery();
+  const { data, isLoading, error, refetch } = useGetOrganizationsQuery();
   const [selected, setSelected] = useState<string>("");
 
   const handleContinue = () => {
@@ -17,7 +18,7 @@ const Organizations = () => {
   };
 
   if (isLoading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-500 text-sm">Loading...</div>;
-  if (error) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-500 text-sm">Failed to load organizations</div>;
+  if (error) return <ErrorState onRetry={refetch} />;
 
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-10">

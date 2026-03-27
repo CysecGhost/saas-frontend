@@ -1,8 +1,10 @@
 import Skeleton from "../components/Skeleton";
 import { useGetProductsQuery } from "../slices/productApiSlice";
+import EmptyState from "../components/EmptyState";
+import ErrorState from "../components/ErrorState";
 
 const Products = () => {
-  const { data, isLoading, error } = useGetProductsQuery();
+  const { data, isLoading, error, refetch } = useGetProductsQuery();
 
   if (isLoading) {
     return (
@@ -18,13 +20,20 @@ const Products = () => {
       </div>
     );
   }
-  if (error) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-500 text-sm">Error loading products</div>;
+  if (error) return <ErrorState onRetry={refetch} />;
 
   return (
     <div className="min-h-screen bg-gray-950 p-8">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-3xl font-bold text-white tracking-tight mb-1">Products</h1>
         <p className="text-gray-500 text-sm mb-8">{data?.products?.length ?? 0} products in inventory</p>
+
+        {data?.products?.length === 0 && (
+          <EmptyState
+            title="No products yet"
+            description="Create your first product to get started"
+          />
+        )}
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
           {data?.products?.map((product: any) => (

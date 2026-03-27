@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useGetOrdersQuery, useCompleteOrderMutation, useCancelOrderMutation } from "../slices/orderApiSlice";
 import toast from "react-hot-toast";
 import Skeleton from "../components/Skeleton";
+import ErrorState from "../components/ErrorState";
+import EmptyState from "../components/EmptyState";
 
 const STATUSES = ["ALL", "PENDING", "COMPLETED", "CANCELLED"];
 
@@ -10,7 +12,7 @@ const Orders = () => {
   const [status, setStatus] = useState("");
   const limit = 10;
 
-  const { data, isLoading, error } = useGetOrdersQuery({
+  const { data, isLoading, error, refetch } = useGetOrdersQuery({
     page,
     limit,
     ...(status && { status }),
@@ -54,7 +56,7 @@ const Orders = () => {
       </div>
     );
   }
-  if (error) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-500 text-sm">Error loading orders</div>;
+  if (error) return <ErrorState onRetry={refetch} />;
 
   const totalPages = data?.pagination?.totalPages ?? 1;
 
@@ -83,8 +85,12 @@ const Orders = () => {
 
         {/* Orders */}
         {data?.orders?.length === 0 && (
-          <p className="text-gray-600 text-sm">No orders found.</p>
+          <EmptyState
+            title="No orders yet"
+            description="Create your first order to get started"
+          />
         )}
+
         <div className="flex flex-col gap-3">
           {data?.orders?.map((order: any) => (
             <div
