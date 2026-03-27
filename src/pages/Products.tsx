@@ -1,9 +1,23 @@
+import Skeleton from "../components/Skeleton";
 import { useGetProductsQuery } from "../slices/productApiSlice";
 
 const Products = () => {
   const { data, isLoading, error } = useGetProductsQuery();
 
-  if (isLoading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-500 text-sm">Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-950 p-8">
+        <div className="max-w-5xl mx-auto space-y-6">
+          <Skeleton className="h-8 w-40" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-28" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (error) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-500 text-sm">Error loading products</div>;
 
   return (

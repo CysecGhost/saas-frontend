@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import Skeleton from "../components/Skeleton";
 
 const AdminDashboard = () => {
   const [startDate, setStartDate] = useState<string>("");
@@ -30,7 +31,43 @@ const AdminDashboard = () => {
     endDate: formattedEnd,
   });
 
-  if (isLoading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-500 text-sm">Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-950 p-8">
+        <div className="max-w-6xl mx-auto space-y-6">
+
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <Skeleton className="h-8 w-40" />
+            <Skeleton className="h-10 w-64" />
+          </div>
+
+          {/* Cards */}
+          <div className="grid md:grid-cols-3 gap-4">
+            <Skeleton className="h-24" />
+            <Skeleton className="h-24" />
+            <Skeleton className="h-24" />
+          </div>
+
+          {/* Charts */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <Skeleton className="h-56" />
+            <Skeleton className="h-56" />
+          </div>
+
+          {/* Top Products */}
+          <div className="space-y-2">
+            <Skeleton className="h-6 w-40" />
+            <Skeleton className="h-12" />
+            <Skeleton className="h-12" />
+            <Skeleton className="h-12" />
+          </div>
+
+        </div>
+      </div>
+    );
+  }
+
   if (error) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-500 text-sm">Error loading data</div>;
 
   const accents = ["#3b82f6", "#8b5cf6", "#10b981", "#f59e0b", "#ef4444"];

@@ -1,30 +1,23 @@
 import { useState } from "react";
 import { useCreateProductMutation } from "../slices/productApiSlice";
+import toast from "react-hot-toast";
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [createProduct, { isLoading }] = useCreateProductMutation();
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    setError("");
-    setSuccess(false);
-    if (!name) {
-      setError("Product name is required");
-      return;
-    }
     try {
       await createProduct({ name, price, stock }).unwrap();
       setName("");
       setPrice(0);
       setStock(0);
-      setSuccess(true);
+      toast.success("Product created successfully");
     } catch (err: any) {
-      setError(err?.data?.message || "Something went wrong");
+      toast.error(err?.data?.message || "Something went wrong");
     }
   };
 
@@ -66,9 +59,6 @@ const CreateProduct = () => {
               className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white text-sm placeholder-gray-600 focus:outline-none focus:border-gray-600 transition"
             />
           </div>
-
-          {error && <p className="text-red-500 text-xs">{error}</p>}
-          {success && <p className="text-green-500 text-xs">Product created successfully</p>}
 
           <button
             type="submit"

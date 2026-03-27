@@ -1,30 +1,24 @@
 import { useState } from "react";
 import { useGetProductsQuery } from "../slices/productApiSlice";
 import { useCreateOrderMutation } from "../slices/orderApiSlice";
+import toast from "react-hot-toast";
+
 
 const CreateOrder = () => {
   const { data } = useGetProductsQuery();
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const [selectedProduct, setSelectedProduct] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    setError("");
-    setSuccess(false);
-    if (!selectedProduct) {
-      setError("Please select a product");
-      return;
-    }
     try {
       await createOrder({ items: [{ productId: selectedProduct, quantity }] }).unwrap();
       setSelectedProduct("");
       setQuantity(1);
-      setSuccess(true);
+      toast.success("Order created successfully");
     } catch (err: any) {
-      setError(err?.data?.message || "Something went wrong");
+      toast.error(err?.data?.message || "Something went wrong");
     }
   };
 
@@ -61,9 +55,6 @@ const CreateOrder = () => {
               className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white text-sm focus:outline-none focus:border-gray-600 transition"
             />
           </div>
-
-          {error && <p className="text-red-500 text-xs">{error}</p>}
-          {success && <p className="text-green-500 text-xs">Order created successfully</p>}
 
           <button
             type="submit"

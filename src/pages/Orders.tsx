@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useGetOrdersQuery, useCompleteOrderMutation, useCancelOrderMutation } from "../slices/orderApiSlice";
+import toast from "react-hot-toast";
+import Skeleton from "../components/Skeleton";
 
 const STATUSES = ["ALL", "PENDING", "COMPLETED", "CANCELLED"];
 
@@ -20,20 +22,38 @@ const Orders = () => {
   const markCompleteOrder = async (id: string) => {
     try {
       await completeOrder(id).unwrap();
+      toast.success("Order completed");
     } catch (err) {
-      console.error("Failed to complete order:", err);
+      toast.error("Failed to complete order");
     }
   };
 
   const markCancelOrder = async (id: string) => {
     try {
       await cancelOrder(id).unwrap();
+      toast.success("Order cancelled");
     } catch (err) {
-      console.error("Failed to cancel order:", err);
+      toast.error("Failed to cancel order");
     }
   };
 
-  if (isLoading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-500 text-sm">Loading orders...</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-950 p-8">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <Skeleton className="h-8 w-40" />
+          <div className="flex gap-2">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-8 w-20" />
+            ))}
+          </div>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <Skeleton key={i} className="h-24" />
+          ))}
+        </div>
+      </div>
+    );
+  }
   if (error) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-500 text-sm">Error loading orders</div>;
 
   const totalPages = data?.pagination?.totalPages ?? 1;

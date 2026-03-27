@@ -21,6 +21,7 @@ import Products from './pages/Products.tsx';
 import CreateOrder from './pages/CreateOrder.tsx';
 import Orders from './pages/Orders.tsx';
 import Layout from './components/Layout.tsx';
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -63,6 +64,7 @@ createRoot(document.getElementById('root')!).render(
   <Provider store={store} >
     <StrictMode>
       <RouterProvider router={router} />
+      <Toaster position="top-right" />
     </StrictMode>
   </Provider>
 )
