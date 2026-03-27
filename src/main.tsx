@@ -20,6 +20,7 @@ import CreateProduct from './pages/CreateProduct.tsx';
 import Products from './pages/Products.tsx';
 import CreateOrder from './pages/CreateOrder.tsx';
 import Orders from './pages/Orders.tsx';
+import Layout from './components/Layout.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,12 +31,24 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
 
       {/* Needs token only */}
-      <Route element={<ProtectedRoute requireOrg={false} />}>
+      <Route
+        element={
+          <ProtectedRoute requireOrg={false}>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="/organizations" element={<Organizations />} />
       </Route>
 
       {/* Needs token + orgId */}
-      <Route element={<ProtectedRoute />}>
+      <Route
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/products" element={<Products />} />
         <Route path="/admin/products/create" element={<CreateProduct />} />

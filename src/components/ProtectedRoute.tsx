@@ -1,14 +1,14 @@
 import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import type { RootState } from "../store";
 
-const ProtectedRoute = ({ requireOrg = true }: { requireOrg?: boolean }) => {
+const ProtectedRoute = ({ children, requireOrg = true }: { children: React.ReactNode; requireOrg?: boolean }) => {
   const { accessToken, orgId } = useSelector((state: RootState) => state.auth);
 
   if (!accessToken) return <Navigate to="/login" replace />;
   if (requireOrg && !orgId) return <Navigate to="/organizations" replace />;
 
-  return <Outlet />;
+  return children;
 };
 
 export default ProtectedRoute;
