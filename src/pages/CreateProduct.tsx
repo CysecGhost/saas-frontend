@@ -10,6 +10,10 @@ const CreateProduct = () => {
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
+    if (!name || price <= 0 || stock < 0) {
+      toast.error("Please enter valid product details");
+      return;
+    }
     try {
       await createProduct({ name, price, stock }).unwrap();
       setName("");

@@ -3,24 +3,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../slices/userApiSlice";
 import { setCredentials } from "../slices/authSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login, { isLoading }] = useLoginMutation();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setError("");
+    if (!email || !password) {
+      toast.error("Please enter both email and password");
+      return;
+    }
+    if (password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials(res.accessToken));
       navigate("/organizations");
     } catch (err: any) {
-      setError(err?.data?.message || "Something went wrong");
+      toast.error(err?.data?.message || "Something went wrong");
     }
   };
 
@@ -34,7 +41,6 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email"
-            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white text-sm placeholder-gray-600 focus:outline-none focus:border-gray-600 transition"
@@ -42,13 +48,10 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-3 bg-gray-900 border border-gray-800 rounded-xl text-white text-sm placeholder-gray-600 focus:outline-none focus:border-gray-600 transition"
           />
-
-          {error && <p className="text-red-500 text-xs">{error}</p>}
 
           <button
             type="submit"

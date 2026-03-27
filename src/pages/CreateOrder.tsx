@@ -12,6 +12,10 @@ const CreateOrder = () => {
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
+    if (!selectedProduct || quantity <= 0) {
+      toast.error("Please select a product and enter a valid quantity");
+      return;
+    }
     try {
       await createOrder({ items: [{ productId: selectedProduct, quantity }] }).unwrap();
       setSelectedProduct("");
