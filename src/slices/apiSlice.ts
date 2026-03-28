@@ -4,7 +4,7 @@ import type { RootState } from "../store";
 import { setCredentials, logout } from "./authSlice";
 
 const baseQuery = fetchBaseQuery({ 
-        baseUrl: import.meta.env.VITE_API_URL + "/api",
+        baseUrl: import.meta.env.VITE_API_URL,
         credentials: "include",
         prepareHeaders: (headers, { getState }) => {
             const state = getState() as RootState;
