@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# SaaS Admin Dashboard — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based admin dashboard for managing products, orders, and analytics with role-based access control. Built with a focus on clean architecture and modern UI.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| Tool | Purpose |
+|------|---------|
+| React + Vite | Frontend framework |
+| TypeScript | Type safety |
+| Redux Toolkit + RTK Query | State management + API layer |
+| Tailwind CSS | Styling |
+| Recharts | Analytics charts |
+| React Router v7 | Routing + protected routes |
+| React Hot Toast | Notifications |
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Authentication**
+- JWT access + refresh token flow
+- Access token in Redux + localStorage
+- Refresh token in httpOnly cookie
+- Automatic token refresh on 401 via RTK Query middleware
 
-## Expanding the ESLint configuration
+**Organization System**
+- Multi-tenant support
+- Org selection on login
+- All requests scoped via `X-Org-Id` header
+- Role stored per organization
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Products**
+- Create, view, and manage products
+- Stock and pricing management
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Orders**
+- Create orders with product selection
+- View, paginate, and filter by status
+- Update order status (PENDING → COMPLETED / CANCELLED)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Analytics**
+- Total revenue, orders, and average order value
+- Daily revenue and order trend charts
+- Top selling products
+- Date range filtering
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+**UI**
+- Dark theme
+- Skeleton loaders
+- Toast notifications
+- Fully responsive
+
+## Getting Started
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Environment Variables
+```env
+VITE_API_URL=https://your-backend-url
 ```
+
+## Project Structure
+```
+src/
+├── components/    # Reusable UI components
+├── pages/         # Route-level pages
+├── slices/        # Redux + RTK Query slices
+├── store.ts       # Redux store
+└── App.tsx        # Root component
+```
+
+## Deployment
+
+Deployed on Vercel with `VITE_API_URL` set to the Railway backend URL.
