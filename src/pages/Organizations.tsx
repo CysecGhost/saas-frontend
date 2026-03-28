@@ -14,8 +14,6 @@ const Organizations = () => {
 
   const handleContinue = () => {
     if (!selected) return;
-    console.log("selected:", selected);
-    console.log("role:", role);
     dispatch(setOrgId(selected));
     dispatch(setRole(role));
     navigate("/admin/dashboard");
