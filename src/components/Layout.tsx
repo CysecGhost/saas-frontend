@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../slices/authSlice";
+import { apiSlice } from "../slices/apiSlice";
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -8,6 +9,7 @@ const Layout = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(apiSlice.util.resetApiState()); 
     navigate("/login");
   };
 

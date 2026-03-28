@@ -45,7 +45,7 @@ const router = createBrowserRouter(
       {/* Needs token + orgId */}
       <Route
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={["ADMIN"]}>
             <Layout />
           </ProtectedRoute>
         }

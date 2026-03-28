@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../slices/userApiSlice";
 import { setCredentials } from "../slices/authSlice";
 import toast from "react-hot-toast";
+import { apiSlice } from "../slices/apiSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ const Login = () => {
     }
     try {
       const res = await login({ email, password }).unwrap();
+      dispatch(apiSlice.util.resetApiState());
       dispatch(setCredentials(res.accessToken));
       navigate("/organizations");
     } catch (err: any) {

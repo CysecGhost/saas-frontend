@@ -1,6 +1,6 @@
 import { useGetOrganizationsQuery } from "../slices/organizationApiSlice";
 import { useDispatch } from "react-redux";
-import { setOrgId } from "../slices/authSlice";
+import { setOrgId, setRole } from "../slices/authSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorState from "../components/ErrorState";
@@ -10,16 +10,20 @@ const Organizations = () => {
   const navigate = useNavigate();
   const { data, isLoading, error, refetch } = useGetOrganizationsQuery();
   const [selected, setSelected] = useState<string>("");
+  const [role, setRoleState] = useState<string>("");
 
   const handleContinue = () => {
     if (!selected) return;
+    console.log("selected:", selected);
+    console.log("role:", role);
     dispatch(setOrgId(selected));
+    dispatch(setRole(role));
     navigate("/admin/dashboard");
   };
 
   if (isLoading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-500 text-sm">Loading...</div>;
   if (error) return <ErrorState onRetry={refetch} />;
-
+  
   return (
     <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center p-10">
       <h1 className="text-4xl font-bold text-white tracking-tight mb-2">Select Organization</h1>
@@ -29,7 +33,10 @@ const Organizations = () => {
         {data?.orgs?.map((org: any) => (
           <button
             key={org.orgId}
-            onClick={() => setSelected(org.orgId)}
+            onClick={() => {
+              setSelected(org.orgId)
+              setRoleState(org.role)
+            }}
             className={`w-full px-5 py-4 rounded-xl border text-left transition
               ${selected === org.orgId
                 ? "bg-blue-500 border-blue-500 text-white"
