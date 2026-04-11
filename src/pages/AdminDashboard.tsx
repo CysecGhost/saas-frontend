@@ -77,29 +77,29 @@ const AdminDashboard = () => {
       <div className="max-w-6xl mx-auto space-y-6">
 
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-white tracking-tight">Dashboard</h1>
             <p className="text-gray-500 text-sm mt-1">Analytics overview</p>
           </div>
 
           {/* Date picker */}
-          <div className="flex items-center gap-3 bg-gray-900 border border-gray-800 rounded-xl px-4 py-2.5">
-            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-2 bg-gray-900 border border-gray-800 rounded-xl px-3 py-2 w-fit">
+            <svg className="w-4 h-4 text-gray-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="bg-transparent text-sm text-gray-400 outline-none cursor-pointer"
+              className="bg-transparent text-xs text-gray-400 outline-none cursor-pointer w-28"
             />
             <span className="text-gray-700">—</span>
             <input
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="bg-transparent text-sm text-gray-400 outline-none cursor-pointer"
+              className="bg-transparent text-xs text-gray-400 outline-none cursor-pointer w-28"
             />
             {(startDate || endDate) && (
               <button
